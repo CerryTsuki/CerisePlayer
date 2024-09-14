@@ -11,3 +11,5 @@
 * Seek throughout song
 * Easy way to add extra songs
 * uhhh that's about it i think
+
+### [Click here for a demo!](cerrytsuki.github.io/CerisePlayer/)
