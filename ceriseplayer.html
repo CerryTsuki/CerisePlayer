@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <title>CerisePlayer</title>
+
+
+    <link rel=stylesheet href="style.css">
+
+</head>
+
+<body>
+    
+    <div id="audio-player">
+        <audio id="ap-current">
+            <source id="ap-source" src="audio/home.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <span id="ap-currenttrack"></span>
+        <!-- buttons -->
+        <button id="ap-bwd"></button>
+        <button id="ap-play" class="play"></button>
+        <button id="ap-stop"></button>
+        <button id="ap-fwd"></button>
+        <div id="ap-vol"></div>
+        <span id="ap-time">
+            <span id="ap-time-current">0:00</span>/<span id="ap-time-max">0:00</span>
+        </span>
+        <div id="ap-bar">
+            <div id="ap-bar-full"></div>
+            <div id="ap-scroller"><img src="img/scroller.webp" id="ap-scrollerdrag"></div>
+        </div>
+        
+        <div id="ap-current-title">CerisePlayer # No songs detected.</div>
+    </div>
+
+
+    <!-- load script here -->
+    <script type="text/javascript" src="audioplayer.js" ></script>
+
+</body>
+
+</html>
