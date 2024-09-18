@@ -54,7 +54,7 @@
             $("#ap-title-text").text(songlist[selected][1][0] + " - " + songlist[selected][1][1]);
             $("#ap-time-max:contains(NaN)").text("0:00"); //chrome fucking sucks and displays NaN:NaN by default
             $("#ap-title-text").css("left", 0); //resets title position
-            titleIdle = 0;
+            titleIdle = 0; direction = -1;
         }
         function updateVolume() {
             audio.volume = $("#ap-vol").slider("value");
