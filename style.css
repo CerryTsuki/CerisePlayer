@@ -8,21 +8,13 @@ html {
 #audio-player {
     display: flex;
     flex-wrap: wrap-reverse;
-    width: 400px;
+    width: 300px;
     background-color: #f36;
-    border: 2px solid;
-    border-image: url("img/b_ext.webp");
-    border-image-slice: 2;
-    border-image-width: 2px;
-    border-image-outset: 1px;
-    border-image-repeat: stretch;
-    padding: 2px;
+    border-image: url("img/b_ext.webp") 2 / 2px / 1px stretch;
+    padding: 4px;
     background-image: url("img/logo.webp");
     background-position: bottom 2px right 4px;
     background-repeat:no-repeat;
-
-
-
 }
 
 #audio-player div,
@@ -30,8 +22,6 @@ html {
 #audio-player span {
     align-self: center;
 }
-
-
 #audio-player button {
     width: 24px;
     height: 24px;
@@ -187,11 +177,12 @@ html {
     font-size: 13px;
     padding: 4px;
     margin: 0px;
-
-    border: 2px solid;
-    border-image: url("img/b_int.webp");
-    border-image-slice: 2;
-    border-image-width: 2px;
-    border-image-outset: 1px;
-    border-image-repeat: stretch;
+    height:1em;
+    border-image: url("img/b_int.webp") 2 / 2px / 1px stretch;
+    white-space:nowrap;
+    overflow: hidden;
+}
+#ap-title-text {
+    position: relative;
+    left:0px;
 }

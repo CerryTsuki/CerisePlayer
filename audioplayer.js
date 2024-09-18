@@ -1,4 +1,4 @@
- // AuclairPlayer.js
+// CerisePlayer.js
 // by Cereza "CerryTsuki" A.
 
 
@@ -13,6 +13,12 @@
         var songlist = [];
         var currentTrack = 0;
 
+
+        //back and forth direction
+        var direction = -1;
+        var titleIdle = 0;
+
+        //scroller
         var dragging = false;
 
         function apPlay() {
@@ -24,29 +30,30 @@
             $("#ap-play").removeClass("pause"); $("#ap-play").addClass("play");
         }
         //loads a song
-        function loadSong(selected) {
+        function loadSong(selected, initplay) {
             var filedir = songfileslocation + songlist[selected][0];
             $("#ap-source").attr("src", filedir);
             audio.load();
-            apPlay();
+            if (initplay) apPlay(); 
+
         }
         function nextSong() {
             currentTrack++;
             if (currentTrack > (songlist.length - 1)) currentTrack = 0; //if the current track list is at the start, set it to the last song in the list
-            loadSong(currentTrack);
+            loadSong(currentTrack, true);
             updateTitle(currentTrack);
         }
         function prevSong() {
             currentTrack--;
             if (currentTrack < 0) currentTrack = (songlist.length - 1); //if the current track list is at the start, set it to the last song in the list
-            loadSong(currentTrack);
+            loadSong(currentTrack, true);
             updateTitle(currentTrack);
         }
         function updateTitle(selected) {
             //$("#ap-current-title").text("Currently Playing : " + songlist[selected][1][0] + " - " + songlist[selected][1][1]);
-            $("#ap-current-title").text(songlist[selected][1][0] + " - " + songlist[selected][1][1]);
-
+            $("#ap-title-text").text(songlist[selected][1][0] + " - " + songlist[selected][1][1]);
             $("#ap-time-max:contains(NaN)").text("0:00"); //chrome fucking sucks and displays NaN:NaN by default
+            $("#ap-title-text").css("left", 0); //resets title position
         }
         function updateVolume() {
             audio.volume = $("#ap-vol").slider("value");
@@ -69,15 +76,41 @@
             if (!dragging) $("#ap-scroller").css("left", (currentTime / duration) * width);
         }
 
+        function scrollText() {
+            
+            const step = 1; //rate of movement (int value only)
+            const idle = 25; //how long to wait
+            const container = $("#ap-current-title");
+            const textspan = $("#ap-title-text");
+            if(textspan.width() <= container.width() - step * idle) return; //if the text fits, exit func
+           
+            var currenttextpos = parseInt(textspan.css("left"));
+            var l = currenttextpos + (step * direction);
+            var maxScroll = (container.width() - textspan.width());
+            if (titleIdle)  {l = currenttextpos; --titleIdle;}
+            
+            if (currenttextpos > 0 - (step * direction) || currenttextpos < maxScroll - (step * direction)) {  //bump corner
+                titleIdle = idle;
+                direction *= -1;
+            }
+            
+            textspan.css("left",(l)) ;
+        }
+
+        // - init -
         $(document).ready(function () {
 
-            // - INIT PROCESS -
+            setInterval(function() {
+               scrollText();
+            }, 50);
+            
             //get that file
             $.getJSON(songlistlocation, function (data) {
                 $.each(data, function (i, e) {
                     songlist.push([i, e]);
 
                 });
+                loadSong(currentTrack, false);
                 updateTitle(0);
                 updateTime();
             });
@@ -93,7 +126,7 @@
 
             // play button
             $("#ap-play").on("mouseup", function () {
-                if (audio.paused) apPlay();
+                if (audio.paused) apPlay(); 
                 else apPause();
             });
 
@@ -111,7 +144,7 @@
                 range: "min",
                 max: 1.0,
                 step: 0.1,
-                value: 0.8,
+                value: 0.7,
                 min: 0.0,
                 slide: updateVolume,
                 change: updateVolume
